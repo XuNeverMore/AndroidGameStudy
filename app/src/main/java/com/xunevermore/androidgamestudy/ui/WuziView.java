@@ -156,16 +156,24 @@ public class WuziView extends View {
             listener.onChessFell(currentChessType);
         }
 
-        chessBoard[chess.x][chess.y] = chess;
+        chessBoard[chess.row][chess.column] = chess;
         chessList.add(chess);
 
-        // TODO: 2018/1/23 0023 检查是否由胜利，是则回调胜利
+        //  2018/1/23 0023 检查是否由胜利，是则回调胜利
+
         boolean isVictory = checkVictory(chess);
+        if(listener!=null&&isVictory){
+            listener.onVictory(chess.type);
+        }
 
         //换棋子颜色
-        currentChessType = currentChessType == CHESS_BLACK ? CHESS_WHITE : CHESS_BLACK;
+        swapChessType();
         invalidate();
 
+    }
+
+    private void swapChessType() {
+        currentChessType = currentChessType == CHESS_BLACK ? CHESS_WHITE : CHESS_BLACK;
     }
 
 
@@ -180,23 +188,84 @@ public class WuziView extends View {
 
         int hCount = checkHorizontal(chess.type, chess.row, chess.column);
 
+        int vCount = checkVertical(chess.type, chess.row, chess.column);
 
-        return false;
+        int c24 = checkLT2RB(chess.type, chess.row, chess.column);
+
+        int c13 = checkRT2LB(chess.type, chess.row, chess.column);
+
+        return hCount >= 5 || vCount >= 5 || c24 >= 5 || c13 >= 5;
     }
 
-
-
-    private int checkLeftTop(int type, int row, int column){
-
+    private int checkRT2LB(int type, int row, int column) {
         int result = 1;
 
+        //右上
+        for (int i = 1; i < Math.min(row, 10 - column); i++) {
 
+            Chess c = chessBoard[row - i][column + i];
+            if (c != null && c.type == type) {
+                result++;
+            } else {
+                break;
+            }
+
+        }
+        //左下
+        for (int i = 1; i < Math.min(column, 10 - row); i++) {
+            Chess c = chessBoard[row + i][column - i];
+            if (c != null && c.type == type) {
+                result++;
+            } else {
+                break;
+            }
+        }
 
 
         return result;
     }
 
 
+    private int checkLT2RB(int type, int row, int column) {
+
+        int result = 1;
+        //左上
+
+        for (int i = 1; i < Math.min(row, column); i++) {
+            Chess c = chessBoard[row - i][column - i];
+            if (c != null && c.type == type) {
+                result++;
+            } else {
+                break;
+            }
+
+        }
+
+        //右下
+        for (int i = 1; i < Math.min(10 - row, 10 - column); i++) {
+
+            Chess c = chessBoard[row + i][column + i];
+            if (c != null && c.type == type) {
+                result++;
+            } else {
+                break;
+            }
+
+        }
+
+
+        return result;
+    }
+
+
+    /**
+     * 检查数值方向的最大连子数目
+     *
+     * @param type
+     * @param row
+     * @param column
+     * @return
+     */
     private int checkVertical(int type, int row, int column) {
         int result = 1;
         for (int i = row + 1; i < 10; i++) {
@@ -221,6 +290,14 @@ public class WuziView extends View {
     }
 
 
+    /**
+     * 检查水平方向最大的连子数目
+     *
+     * @param type
+     * @param row
+     * @param column
+     * @return
+     */
     private int checkHorizontal(int type, int row, int column) {
 
         int result = 1;
@@ -308,6 +385,17 @@ public class WuziView extends View {
         void onVictory(int chessType);
 
 
+    }
+
+
+    /**
+     * 重新开始一局
+     */
+    public void reset(){
+        chessList.clear();
+        chessBoard = new Chess[10][10];
+        swapChessType();
+        invalidate();
     }
 
 
