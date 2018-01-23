@@ -39,6 +39,9 @@ public class WuziView extends View {
     private int chessRadius;
     private List<Chess> chessList = new ArrayList<>();
 
+    private Chess[][] chessBoard = new Chess[10][10];
+
+
     public WuziView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
@@ -153,14 +156,93 @@ public class WuziView extends View {
             listener.onChessFell(currentChessType);
         }
 
+        chessBoard[chess.x][chess.y] = chess;
         chessList.add(chess);
 
         // TODO: 2018/1/23 0023 检查是否由胜利，是则回调胜利
+        boolean isVictory = checkVictory(chess);
 
         //换棋子颜色
         currentChessType = currentChessType == CHESS_BLACK ? CHESS_WHITE : CHESS_BLACK;
         invalidate();
 
+    }
+
+
+    /**
+     * 检查当盖子落下后是否游戏结束
+     *
+     * @param chess
+     * @return
+     */
+    private boolean checkVictory(Chess chess) {
+
+
+        int hCount = checkHorizontal(chess.type, chess.row, chess.column);
+
+
+        return false;
+    }
+
+
+
+    private int checkLeftTop(int type, int row, int column){
+
+        int result = 1;
+
+
+
+
+        return result;
+    }
+
+
+    private int checkVertical(int type, int row, int column) {
+        int result = 1;
+        for (int i = row + 1; i < 10; i++) {
+            Chess chess = chessBoard[i][column];
+            if (chess != null && chess.type == type) {
+                result++;
+            } else {
+                break;
+            }
+        }
+
+        for (int i = row - 1; i > 0; i--) {
+            Chess chess = chessBoard[i][column];
+            if (chess != null && chess.type == type) {
+                result++;
+            } else {
+                break;
+            }
+        }
+
+        return result;
+    }
+
+
+    private int checkHorizontal(int type, int row, int column) {
+
+        int result = 1;
+        for (int i = column + 1; i < 10; i++) {
+            Chess chess = chessBoard[row][i];
+            if (chess != null && chess.type == type) {
+                result++;
+            } else {
+                break;
+            }
+        }
+
+        for (int i = column - 1; i > 0; i--) {
+            Chess chess = chessBoard[row][i];
+            if (chess != null && chess.type == type) {
+                result++;
+            } else {
+                break;
+            }
+        }
+
+        return result;
     }
 
     public Chess getChessFromXY(int x, int y) {
