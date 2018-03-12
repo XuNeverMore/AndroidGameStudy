@@ -24,7 +24,7 @@ import com.xunevermore.androidgamestudy.R;
  * Created by Administrator on 2018/1/22 0022.
  */
 
-class LunarView extends SurfaceView implements SurfaceHolder.Callback {
+public class LunarView extends SurfaceView implements SurfaceHolder.Callback {
     class LunarThread extends Thread {
         /*
          * Difficulty setting constants
@@ -452,8 +452,9 @@ class LunarView extends SurfaceView implements SurfaceHolder.Callback {
                 } else {
                     mRotating = 0;
                     mEngineFiring = false;
-                    Resources res = mContext.getResources();
-                    CharSequence str = "";
+//                    Resources res = mContext.getResources();
+                    Resources res =null;
+                    CharSequence str = null;
                     if (mMode == STATE_READY)
                         str = res.getText(R.string.mode_ready);
                     else if (mMode == STATE_PAUSE)

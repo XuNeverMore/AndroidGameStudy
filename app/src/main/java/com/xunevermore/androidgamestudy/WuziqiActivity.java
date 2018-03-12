@@ -42,27 +42,27 @@ public class WuziqiActivity extends AppCompatActivity implements WuziView.ChessE
     @Override
     public void onVictory(int chessType) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        String msg = chessType==WuziView.CHESS_BLACK?"黑":"白";
-        msg = msg.concat("棋获胜\n再来一局？");
-        builder.setMessage(msg);
-        builder.setCancelable(false);
-        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-
-        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                wuzi.reset();
-            }
-        });
-
-        builder.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        String msg = chessType==WuziView.CHESS_BLACK?"黑":"白";
+//        msg = msg.concat("棋获胜\n再来一局？");
+//        builder.setMessage(msg);
+//        builder.setCancelable(false);
+//        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//            }
+//        });
+//
+//        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                wuzi.reset();
+//            }
+//        });
+//
+//        builder.show();
 
     }
 }

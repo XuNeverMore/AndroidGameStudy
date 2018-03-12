@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 //        list.add(new Page(LunarActivity.class,"游戏"));
         list.add(new Page(SoundActivity.class,"声音"));
         list.add(new Page(WuziqiActivity.class,"五子棋"));
+        list.add(new Page(WalkActivity.class,"行走"));
 
 
         adapter.addAll(list);
