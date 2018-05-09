@@ -124,6 +124,9 @@ public class WalkView extends SurfaceView implements SurfaceHolder.Callback{
 
         SurfaceHolder holder = getHolder();
         Canvas canvas = holder.lockCanvas();
+        if(canvas==null){
+            return;
+        }
         canvas.save();
         canvas.drawColor(Color.WHITE);
 
